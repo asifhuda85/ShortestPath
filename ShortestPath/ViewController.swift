@@ -102,11 +102,24 @@ class ViewController: UIViewController {
     }
     
     @IBAction func resultButton(_ sender: AnyObject) {
-        resultLabel.text = "Shortest Path length is \(calculatePathLength(arr: arr))\n \n Path is \(calculatePath(p:path))"
+        
+        let pathLength = calculatePathLength(arr: arr)
+
+        if ( pathLength <= 50) {
+            resultLabel.text = "Shortest Path length is \(calculatePathLength(arr: arr))\n \n Path is \(calculatePath(p:path))"
+
+        } else {
+            resultLabel.text = "Shortest Path length is more than 50)"
+            
+        }
+        
+
+
+//        resultLabel.text = "Shortest Path length is \(calculatePathLength(arr: arr))\n \n Path is \(calculatePath(p:path))"
         resetBtn.isHidden = false
     }
     
-    func calculatePathLength(arr: [[Int]]) -> String {
+    func calculatePathLength(arr: [[Int]]) -> Int {
         let rows  = arr.count
         let cols = arr[0].count
         path = ""
@@ -125,9 +138,9 @@ class ViewController: UIViewController {
         }
         
         if (pathLength > 50) {
-            return "No path <=50 exists"
+            return 51
         } else {
-            return "\(pathLength)"
+            return pathLength
         }
         
     }

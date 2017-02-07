@@ -12,7 +12,8 @@ import XCTest
 class ShortestPathTests: XCTestCase {
     
     var vc: ViewController!
-
+    var pair = Pair(len: 0, s: "")
+    
     override func setUp() {
         super.setUp()
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
@@ -21,11 +22,29 @@ class ShortestPathTests: XCTestCase {
     
     func testCalculatePathLength () {
         let testArr = [[3,5,6],[4,6,8],[2,7,9]]
-        let testResult = "13"
+        let testResult = 13
         let testCalculatePathLength =  vc.calculatePathLength(arr: testArr)
         XCTAssertEqual(testResult, testCalculatePathLength, "Result is not correct")
         
     }
+    
+
+
+    func testPairLen() {
+        
+        let testArr = [[3,5,6],[4,6,8],[2,7,9]]
+        let i = 1
+        let j = 0
+        let rows = 3
+        let cols = 3
+        let p = pair
+        
+        let dfs = vc.dfs(a: testArr, p: p, i: i, j: j, rows: rows, cols: cols)
+        
+        XCTAssertEqual(dfs.len, 11, "Result is not correct")
+        
+    }
+    
     
     func testCalculatePath () {
         let testArr = [[3,5,6],[4,6,8],[2,7,9]]
@@ -36,7 +55,7 @@ class ShortestPathTests: XCTestCase {
 
     }
     
-    
+
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
