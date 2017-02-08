@@ -8,10 +8,10 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var label1: UILabel!
     @IBOutlet weak var totalArrayList: UILabel!
-
+    @IBOutlet weak var resultTitleLbl: UILabel!
     @IBOutlet weak var errorLbl: UILabel!
     @IBOutlet weak var resetBtn: UIButton!
     @IBOutlet weak var resultBtn: UIButton!
@@ -21,247 +21,141 @@ class ViewController: UIViewController {
     @IBOutlet weak var textField1: UITextField!
     @IBOutlet weak var numberInputField: UITextField!
     @IBOutlet weak var label2: UILabel!
+
     var numberOfRows = 0
     var numberOfColumn = 0
     var arr = [[Int]]()
     var path = ""
+    var check = false
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        textField1.delegate = self
+        numberInputField.delegate = self
+        textField1.keyboardType = .numberPad
+        numberInputField.keyboardType = .numbersAndPunctuation
 
-
-    @IBAction func resetBtnTapped(_ sender: AnyObject) {
-            numberOfRows = 0
-            numberOfColumn = 0
-            arr = [[Int]]()
-            totalArrayList.text = ""
-            resultLabel.text = ""
-            label2.text = "Please Insert numbers perated by space for row 1"
-            label1.text = "Insert Number of Rows"
-            textField1.text = ""
-            textField1.isUserInteractionEnabled = true
-            textField1.backgroundColor = UIColor.white
-            RCBtn.isUserInteractionEnabled  = true
-            numberInputField.isUserInteractionEnabled = true
-            submitBtn.isUserInteractionEnabled = true
-            numberInputField.backgroundColor = UIColor.white
-            resultBtn.isHidden = true
-            resetBtn.isHidden = true
-            numberInputField.isUserInteractionEnabled = false
+    }
+    /**
+     This method checks whether the textfield input contains the character mentioned in the character set.
+     If it matches it allows the input or else it will not take the input.
+     Here there are two text fields, one allows spaces in the input, while the other does not.
+     A bool check is done to enforce this validation.
+     */
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if check == false {
+            let invalidCharacters = CharacterSet(charactersIn: "0123456789").inverted
+            return string.rangeOfCharacter(from: invalidCharacters, options: [], range: string.startIndex ..< string.endIndex) == nil
+            
+        }else {
+            let invalidCharacters = CharacterSet(charactersIn: "-0123456789 ").inverted
+            return string.rangeOfCharacter(from: invalidCharacters, options: [], range: string.startIndex ..< string.endIndex) == nil
+        }
     }
     
+    /**
+     This IBAction take user input. If the user input is valid then it calls the numberBtnPressed function.
+     */
     @IBAction func numberSubmitBtnPressed() {
         guard let userInput:String = numberInputField.text else {
             return
         }
-     numberBtnPressed(array: arr, nROws: numberOfRows, nCols: numberOfColumn, numberInput: userInput )
+        numberBtnPressed(array: arr, nROws: numberOfRows, nCols: numberOfColumn, numberInput: userInput )
     }
     
-    func numberBtnPressed (array:[[Int]], nROws: Int, nCols:Int, numberInput: String) {
-        arr = array
-        numberOfRows = nROws
-        numberOfColumn = nCols
-        
-//        numberInputField.text = numberInput
-        if  arr.count < numberOfRows {
-//
-            let userInputArr = numberInput.components(separatedBy: " ")
-            if userInputArr.count  == numberOfColumn {
-                errorLbl.text = ""
-                var testArray = [Int]()
-                
-                for row in userInputArr {
-                    testArray.append(Int(row)!)
-                }
-                arr.append(testArray)
-                testArray.removeAll()
-                numberInputField.text = ""
-                label2.text = "Please Insert numbers perated by space for row \(arr.count+1)"
-                
-                if arr.count == numberOfRows {
-                    numberInputField.text = ""
-                    numberInputField.isUserInteractionEnabled = false
-                    submitBtn.isUserInteractionEnabled = false
-                    numberInputField.backgroundColor = UIColor.gray
-                    //            totalArrayList.text = "\(numberOfArray)"
-                    var test2 = ""
-                    for i in arr {
-                        for j in i {
-                            test2 += ("\(j) ")
-                        }
-                        test2 += ("\n")
-                    }
-                    totalArrayList.text = test2
-                    resultBtn.isHidden = false
-                    
-                }
-            } else {
-                let errorTxt = "Wrong Input"
-                errorLbl.text = errorTxt
-                errorLbl.textColor = UIColor.red
-            }
-            
-        }
-    }
-    
-    @IBAction func resultButton(_ sender: AnyObject) {
-        
+    /**
+     This IBAction checks the path length.
+     If the path length is less or equal to 50 then it shows the user the path length and the path itself.
+     If the path length is more than 50 then it shows a message to that effect.
+     */
+    @IBAction func resultButton() {
+        resultTitleLbl.text = "Output"
         let pathLength = calculatePathLength(arr: arr)
-
         if ( pathLength <= 50) {
             resultLabel.text = "Shortest Path length is \(calculatePathLength(arr: arr))\n \n Path is \(calculatePath(p:path))"
-
         } else {
-            resultLabel.text = "Shortest Path length is more than 50)"
-            
+            resultLabel.text = "Shortest Path length is more than 50"
         }
-        
-
-
-//        resultLabel.text = "Shortest Path length is \(calculatePathLength(arr: arr))\n \n Path is \(calculatePath(p:path))"
+        resultBtn.isHidden = true
         resetBtn.isHidden = false
     }
     
-    func calculatePathLength(arr: [[Int]]) -> Int {
-        let rows  = arr.count
-        let cols = arr[0].count
-        path = ""
-        
-        var pathLength = 100
-
-        for i in 0..<rows {
-            let p = Pair(len: arr[i][0], s: "")
-            let ans = dfs(a: arr, p: p, i: i, j: 0, rows: rows, cols: cols)
-            let len = ans.len
-            if (len < pathLength) {
-                pathLength = len
-                path = String(ans.path)
-                path = "\(path) \(arr[i][0])"
-            }
-        }
-        
-        if (pathLength > 50) {
-            return 51
-        } else {
-            return pathLength
-        }
-        
-    }
- 
-    func calculatePath(p: String)->String {
-        var reversePath = [String]()
-        var p = path
-        
-        let revString  = p.components(separatedBy: " ")
-        p = ""
-
-        for rev in revString {
-            reversePath.append(rev)
-        }
-        for i in stride(from: revString.count-1, through: 0, by: -1) {
-            p += "\(reversePath[i]) "
-        }
-            return "\(p)"
-    }
-
-  
+    /**
+     This IBAction only takes care of user input for number of rows and Number of columns.
+     This function converts the user input and checks whether it is within the allowed range
+     If it is then it is stored as numberOfRows or numberOfColumns.
+     Otherwise, an alert is given to the user to prompt input within the allowed range.
+     */
+    
     @IBAction func sumbitBtn() {
         if (label1.text?.contains("Rows"))!{
             let rowInput = textField1.text
             guard let nRow = Int(rowInput!)  else {
                 return
             }
-            numberOfRows = nRow
-            label1.text = "Insert Number of Columns"
-            textField1.text = ""
-            print(numberOfRows)
+            // checks whether the number of row input is between 1-10
+            if nRow < 11 && nRow > 0 {
+                label1.textColor = UIColor.black
+                numberOfRows = nRow
+                label1.text = "Insert Number of Columns between 5-10"
+                textField1.text = ""
+            }else {
+                // If the input is outside range show red text
+                label1.textColor = UIColor.red
+                print("\(nRow) is not valid")
+            }
         } else {
             let columnInput = textField1.text
             guard let nColumn = Int(columnInput!)  else {
                 return
             }
-            numberOfColumn = nColumn
-            print(numberOfColumn)
-            textField1.text = ""
-            textField1.isUserInteractionEnabled = false
-            textField1.backgroundColor = UIColor.gray
-            RCBtn.isUserInteractionEnabled  = false
-            numberInputField.isUserInteractionEnabled = true
-            
+            // checks whether the number of columns input is between 5-10
+            if nColumn <= 10 && nColumn >= 5 {
+                label2.text = "Please Insert \(nColumn) numbers perated by space for row 1"
+                label1.textColor = UIColor.black
+                numberOfColumn = nColumn
+                check = true
+                textField1.text = ""
+                textField1.isUserInteractionEnabled = false
+                textField1.backgroundColor = UIColor.gray
+                RCBtn.isUserInteractionEnabled  = false
+                numberInputField.isUserInteractionEnabled = true
+                
+            } else {
+                // If the input is outside range show red text
+                label1.textColor = UIColor.red
+                print("\(nColumn) is not valid")
+            }
         }
-        
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
- 
-        // Do any additional setup after loading the view, typically from a nib.
+    /**
+     This IBAction resets all the counts, removes all the results and resets the app to its original state
+     to perform the calculation again without relaunching the app.
+     */
+    @IBAction func resetBtnTapped(_ sender: AnyObject) {
+        numberOfRows = 0
+        numberOfColumn = 0
+        arr = [[Int]]()
+        totalArrayList.text = ""
+        resultLabel.text = ""
+        resultTitleLbl.text = ""
+        errorLbl.text = ""
+        label2.text = "Please Insert numbers perated by space for row 1"
+        label1.text = "Insert Number of Rows between 1-10"
+        textField1.text = ""
+        textField1.isUserInteractionEnabled = true
+        textField1.backgroundColor = UIColor.white
+        RCBtn.isUserInteractionEnabled  = true
+        numberInputField.isUserInteractionEnabled = true
+        submitBtn.isUserInteractionEnabled = true
+        numberInputField.backgroundColor = UIColor.white
+        resultBtn.isHidden = true
+        resetBtn.isHidden = true
+        numberInputField.isUserInteractionEnabled = false
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
-    func dfs(a:[[Int]], p: Pair, i: Int, j:Int, rows:Int, cols:Int)-> Pair {
-        var s = p.path
-        
-        if (p.len > 50) {
-            return p
-        }
-
-        var i1 = Int()
-        var i2 = Int()
-        var i3 = Int()
-        
-        if(i==0) {
-            i1 = rows-1
-            if rows == 1 {
-                i3 = i
-            }else {
-                i3 = i+1
-            }
-        }
-        else if(i==rows-1) {
-            i1 = i-1
-            i3 = 0
-        }
-        else {
-            i1 = i-1
-            i3 = i+1
-        }
-
-        i2 = i
-        if(j>=cols-2) {
-            var min = 0
-            if(a[i1][j+1]<a[i2][j+1] && a[i1][j+1]<a[i3][j+1]) {
-                min = i1
-            }
-            else if(a[i2][j+1]<a[i1][j+1] && a[i2][j+1]<a[i3][j+1]) {
-                min = i2
-            }
-            else {
-                min = i3
-            }
-            s.append("\(a[min][j+1])")
-            let len = p.len + a[min][j+1]
-            return  Pair(len: len, s: s)
-        }
-        else {
-            var p1:Pair = dfs(a: a, p: Pair(len: p.len + a[i1][j+1], s: s ), i: i1, j: j+1, rows: rows, cols: cols)
-            var p2:Pair = dfs(a: a, p: Pair(len: p.len + a[i2][j+1], s: s ), i: i2, j: j+1, rows: rows, cols: cols)
-             var p3:Pair = dfs(a: a, p: Pair(len: p.len + a[i3][j+1], s: s ), i: i3, j: j+1, rows: rows, cols: cols)
-                if(p1.len<p2.len && p1.len<p3.len) {
-                    p1.path.append(" \(a[i1][j+1])")
-                    return p1
-                }
-                    else if(p2.len<p1.len && p2.len<p3.len) {
-                        p2.path.append(" \(a[i2][j+1])")
-                        return p2
-                    }
-                    else {
-                        p3.path.append(" \(a[i3][j+1])")
-                        return p3
-                    }
-                }
-        }
-
 }

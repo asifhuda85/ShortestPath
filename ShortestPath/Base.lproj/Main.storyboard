@@ -19,7 +19,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Insert Number Rows" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0vo-bV-vWF">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Insert Number Rows between 1-10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0vo-bV-vWF">
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -79,7 +79,7 @@
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zs9-H4-AEM">
                                 <state key="normal" title="Result"/>
                                 <connections>
-                                    <action selector="resultButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ed1-eu-M3q"/>
+                                    <action selector="resultButton" destination="BYZ-38-t0r" eventType="touchUpInside" id="3gx-I8-nDr"/>
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kBy-Zz-Fzp">
@@ -90,7 +90,7 @@
                                     <action selector="resetBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kCv-re-jyb"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pWr-pY-5WA">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pWr-pY-5WA">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="0CF-jS-Okh"/>
                                     <constraint firstAttribute="width" constant="150" id="epq-aG-Wxa"/>
@@ -99,7 +99,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lZ8-cU-5cX">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lZ8-cU-5cX">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="2sA-6b-aeA"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="IFj-DS-qkA"/>
@@ -109,20 +109,25 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="KATA" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qyb-TK-ENH">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="lZ8-cU-5cX" secondAttribute="trailing" constant="16" id="0TK-f6-hyJ"/>
                             <constraint firstAttribute="trailing" secondItem="dcb-ah-AVy" secondAttribute="trailing" constant="54" id="0UZ-U8-kLP"/>
                             <constraint firstItem="urN-jE-SH1" firstAttribute="top" secondItem="A60-XJ-Bbt" secondAttribute="bottom" constant="20" id="3si-ZN-k6Q"/>
-                            <constraint firstItem="0vo-bV-vWF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="30" id="7Ju-sj-GV4"/>
+                            <constraint firstItem="0vo-bV-vWF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="37" id="7Ju-sj-GV4"/>
                             <constraint firstAttribute="trailing" secondItem="9Io-s1-2Ul" secondAttribute="trailing" constant="105" id="AEo-ZM-iMA"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Zs9-H4-AEM" secondAttribute="trailing" constant="149" id="B1F-eb-QWa"/>
                             <constraint firstItem="AR7-D3-dZ1" firstAttribute="top" secondItem="0vo-bV-vWF" secondAttribute="bottom" constant="7" id="Byd-e2-FMu"/>
                             <constraint firstItem="YFG-i6-wwj" firstAttribute="top" secondItem="pWr-pY-5WA" secondAttribute="bottom" constant="11" id="EtH-wz-bpA"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Zbs-Ga-aa3" secondAttribute="trailing" id="H0r-H8-a5R"/>
-                            <constraint firstAttribute="trailing" secondItem="0vo-bV-vWF" secondAttribute="trailing" constant="70" id="IWV-7O-RR7"/>
-                            <constraint firstItem="0vo-bV-vWF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="67" id="IYa-gN-MIs"/>
+                            <constraint firstAttribute="trailing" secondItem="0vo-bV-vWF" secondAttribute="trailing" constant="30" id="IWV-7O-RR7"/>
+                            <constraint firstItem="0vo-bV-vWF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="30" id="IYa-gN-MIs"/>
                             <constraint firstItem="Zbs-Ga-aa3" firstAttribute="top" secondItem="dcb-ah-AVy" secondAttribute="bottom" constant="40" id="JEs-OX-r6K"/>
                             <constraint firstItem="urN-jE-SH1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="16" id="Jbw-Ex-fox"/>
                             <constraint firstItem="9Io-s1-2Ul" firstAttribute="top" secondItem="0vo-bV-vWF" secondAttribute="bottom" constant="7" id="K87-9p-7Pg"/>
@@ -131,7 +136,10 @@
                             <constraint firstAttribute="leadingMargin" secondItem="YFG-i6-wwj" secondAttribute="leading" id="QEm-fC-v83"/>
                             <constraint firstItem="A60-XJ-Bbt" firstAttribute="top" secondItem="AR7-D3-dZ1" secondAttribute="bottom" constant="25" id="QUc-vz-aVw"/>
                             <constraint firstAttribute="trailing" secondItem="A60-XJ-Bbt" secondAttribute="trailing" constant="16" id="SbY-Dd-VFO"/>
+                            <constraint firstItem="Qyb-TK-ENH" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="5" id="VAK-bg-Eqt"/>
                             <constraint firstItem="kBy-Zz-Fzp" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="164" id="Xe9-py-hcU"/>
+                            <constraint firstAttribute="trailing" secondItem="Qyb-TK-ENH" secondAttribute="trailing" constant="157" id="aLL-31-Xlv"/>
+                            <constraint firstItem="Qyb-TK-ENH" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="158" id="aUv-8a-fPz"/>
                             <constraint firstItem="dcb-ah-AVy" firstAttribute="top" secondItem="A60-XJ-Bbt" secondAttribute="bottom" constant="20" id="bPB-7M-6H0"/>
                             <constraint firstItem="dcb-ah-AVy" firstAttribute="leading" secondItem="urN-jE-SH1" secondAttribute="trailing" constant="32" id="c1g-bu-Rbv"/>
                             <constraint firstItem="AR7-D3-dZ1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="106" id="dho-3p-o0f"/>
@@ -153,6 +161,7 @@
                         <outlet property="resetBtn" destination="kBy-Zz-Fzp" id="Q8S-q6-d7m"/>
                         <outlet property="resultBtn" destination="Zs9-H4-AEM" id="8nx-TT-2J7"/>
                         <outlet property="resultLabel" destination="Zbs-Ga-aa3" id="Lw5-Aj-mTP"/>
+                        <outlet property="resultTitleLbl" destination="lZ8-cU-5cX" id="4p3-QK-QZ3"/>
                         <outlet property="submitBtn" destination="dcb-ah-AVy" id="18q-D2-qUy"/>
                         <outlet property="textField1" destination="AR7-D3-dZ1" id="WaQ-ED-vqs"/>
                         <outlet property="totalArrayList" destination="YFG-i6-wwj" id="8pp-IH-llD"/>

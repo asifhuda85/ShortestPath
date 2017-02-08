@@ -7,7 +7,9 @@
 //
 
 import UIKit
-
+/**
+  A "Pair" struct is created, which contains the path length and actual path as a string at any point in the algorithm
+ */
 struct Pair {
     var len = Int()
     var  path = String()
