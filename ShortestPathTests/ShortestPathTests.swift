@@ -18,27 +18,9 @@ class ShortestPathTests: XCTestCase {
         super.setUp()
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         vc = storyboard.instantiateInitialViewController() as! ViewController
-        self.vc?.viewDidLoad()
 
     }
-    /**
-     This Test case checks whether the outlets are present
-     */
-    func testIBoutlets(){
-        guard let outlets = self.vc else {
-            XCTAssert(false, "outlets is nil")
-            return
-        }
 
-        XCTAssertNotNil(outlets.label1, "label1 not present")
-        XCTAssertNotNil(outlets.totalArrayList, "totalArrayList Line is not present")
-        XCTAssertNotNil(outlets.resultTitleLbl, "resultTitleLbl is not present")
-        XCTAssertNotNil(outlets.errorLbl, "errorLbl is not present")
-        XCTAssertNotNil(outlets.resetBtn, "resetBtn is not present")
-        XCTAssertNotNil(outlets.resultBtn, "resultBtn is not present")
-        XCTAssertNotNil(outlets.resultLabel, "resultLabel is not present")
-        XCTAssertNotNil(outlets.RCBtn, "RCBtn is not present")
-    }
     /**
      This Test case checks when test inputs (all positive) are given whether CalculatePathLength function gives the correct path length
      */
@@ -49,6 +31,7 @@ class ShortestPathTests: XCTestCase {
         XCTAssertEqual(testResult, testCalculatePathLength, "Result is not correct")
         
     }
+    
     /**
      This Test case checks when test inputs (Positive and Negative) are given whether CalculatePathLength function gives the correct path length
      */
@@ -64,7 +47,7 @@ class ShortestPathTests: XCTestCase {
      */
     func testCalculatePathIfAllPositive () {
         let testArr = [[3,5,6],[4,6,8],[2,7,9]]
-        let resultStr = "2 5 6 "
+        let resultStr = "3 1 1"
         vc.calculatePathLength(arr: testArr)
         let testCalculatePath =  vc.calculatePath(p: vc.path)
         XCTAssertEqual(testCalculatePath, resultStr, "Result is not correct")
@@ -75,39 +58,113 @@ class ShortestPathTests: XCTestCase {
      */
     func testCalculatePathIfSomeAreNegetive () {
         let testArr = [[2,-3,4,6,8],[4,-1,6,4,8]]
-        let resultStr = "2 -3 4 4 8 "
+        let resultStr = "1 1 1 2 1"
         vc.calculatePathLength(arr: testArr)
         let testCalculatePath =  vc.calculatePath(p: vc.path)
         XCTAssertEqual(testCalculatePath, resultStr, "Result is not correct")
         
     }
+
+    func testCalculateOutputNormalFLow () {
+        let testArr = [[3,4,1,2,8,6],[6,1,8,2,7,4],[5,9,3,9,9,5],[8,4,1,3,2,6],[3,7,2,8,6,4]]
+        let testPathLength = 16
+        let testPathTaken = "1 2 3 4 4 5"
+        let testResult = "Yes"
+        let testCalculateOutput =  vc.calculateOutput(cArr: testArr)
+        XCTAssertEqual(testPathLength, testCalculateOutput.pathLength, "Result is not correct")
+        XCTAssertEqual(testPathTaken, testCalculateOutput.pathTaken, "Result is not correct")
+        XCTAssertEqual(testResult, testCalculateOutput.result, "Result is not correct")
+
+    }
     /**
-     This Test case checks when test inputs (all positive) are given whether CalculatePathLength function gives the correct path length over 50
+     This Test case checks when test inputs (5X3 matrix with no path <50) is given whether the calculateOutput() function returns the correct PathLength, PathTaken and TestResult as expected
      */
-    func testCalculatePathLengthOutsideRange () {
-        let testArr = [[26,28,29],[27,29,29],[27,27,29]]
-        var outsideRange = false
-        let testCalculatePathLength =  vc.calculatePathLength(arr: testArr)
-        if testCalculatePathLength > 50 {
-            outsideRange = true
-        }
-        XCTAssertEqual(true, outsideRange)
+    func testCalculateOutputOutOfRange () {
+        let testArr = [[19,10,19,10,19],[21,23,20,19,12],[20,12,20,11,10]]
+        let testPathLength = 48
+        let testPathTaken = "1 1 1"
+        let testResult = "No"
+        let testCalculateOutput =  vc.calculateOutput(cArr: testArr)
+        XCTAssertEqual(testPathLength, testCalculateOutput.pathLength, "Result is not correct")
+        XCTAssertEqual(testPathTaken, testCalculateOutput.pathTaken, "Result is not correct")
+        XCTAssertEqual(testResult, testCalculateOutput.result, "Result is not correct")
         
     }
     /**
-     This Test case checks when test inputs (all positive) are given whether CalculatePathLength function gives the correct path length <=50
+    This Test case checks when test inputs (1X5 matrix) is given whether the calculateOutput() function returns the correct PathLength, PathTaken and TestResult as expected
+    */
+    func testCalculateOutputWithOneRow () {
+        let testArr = [[5,8,5,3,5]]
+        let testPathLength = 26
+        let testPathTaken = "1 1 1 1 1"
+        let testResult = "Yes"
+        let testCalculateOutput =  vc.calculateOutput(cArr: testArr)
+        XCTAssertEqual(testPathLength, testCalculateOutput.pathLength, "Result is not correct")
+        XCTAssertEqual(testPathTaken, testCalculateOutput.pathTaken, "Result is not correct")
+        XCTAssertEqual(testResult, testCalculateOutput.result, "Result is not correct")
+        
+    }
+  
+    /**
+     This Test case checks when test inputs (5X1 matrix) is given whether the calculateOutput() function returns the correct PathLength, PathTaken and TestResult as expected
      */
-    func testCalculatePathLengthWithinRange () {
-        let testArr = [[3,5,6],[4,6,8],[2,7,9]]
-        var withinRange = false
-        let testCalculatePathLength =  vc.calculatePathLength(arr: testArr)
-        if testCalculatePathLength <= 50 {
-            withinRange = true
-        }
-        XCTAssertEqual(true, withinRange)
+    func testCalculateOutputWithOneColumn () {
+        let testArr = [[5],[8],[5],[3],[5]]
+        let testPathLength = 3
+        let testPathTaken = "4"
+        let testResult = "Yes"
+        let testCalculateOutput =  vc.calculateOutput(cArr: testArr)
+        XCTAssertEqual(testPathLength, testCalculateOutput.pathLength, "Result is not correct")
+        XCTAssertEqual(testPathTaken, testCalculateOutput.pathTaken, "Result is not correct")
+        XCTAssertEqual(testResult, testCalculateOutput.result, "Result is not correct")
+        
+    }
+    /**
+     This Test case checks when test inputs (Starting with >50) are given whether the calculateOutput() function returns the correct PathLength, PathTaken and TestResult as expected
+     */
+    func testCalculateOutputWhenStartPointIsOverRange () {
+        let testArr = [[69,10,19,10,19],[51,23,20,19,12],[60,12,20,11,10]]
+        let testPathLength = 0
+        let testPathTaken = ""
+        let testResult = "No"
+        let testCalculateOutput =  vc.calculateOutput(cArr: testArr)
+        XCTAssertEqual(testPathLength, testCalculateOutput.pathLength, "Result is not correct")
+        XCTAssertEqual(testPathTaken, testCalculateOutput.pathTaken, "Result is not correct")
+        XCTAssertEqual(testResult, testCalculateOutput.result, "Result is not correct")
+        
     }
     
     /**
+     This Test case checks when test inputs (Starting with >50) are given whether the calculateOutput() function returns the correct PathLength, PathTaken and TestResult as expected
+     */
+    func testCalculateOutputWhenOneValueIsOverRange () {
+        let testArr = [[60,3,3,6],[6,3,7,9],[5,6,8,3]]
+        let testPathLength = 14
+        let testPathTaken = "3 1 1 3"
+        let testResult = "Yes"
+        let testCalculateOutput =  vc.calculateOutput(cArr: testArr)
+        XCTAssertEqual(testPathLength, testCalculateOutput.pathLength, "Result is not correct")
+        XCTAssertEqual(testPathTaken, testCalculateOutput.pathTaken, "Result is not correct")
+        XCTAssertEqual(testResult, testCalculateOutput.result, "Result is not correct")
+        
+    }
+    
+    /**
+     This Test case checks when test inputs (Negative values) are given whether the calculateOutput() function returns the correct PathLength, PathTaken and TestResult as expected
+     */
+    func testCalculateOutputWithNegativeInput () {
+        let testArr = [[6,3,-5,9],[-5,2,4,10],[3,-2,6,10],[6,-1,-2,10]]
+        let testPathLength = 0
+        let testPathTaken = "2 3 4 1"
+        let testResult = "Yes"
+        let testCalculateOutput =  vc.calculateOutput(cArr: testArr)
+        XCTAssertEqual(testPathLength, testCalculateOutput.pathLength, "Result is not correct")
+        XCTAssertEqual(testPathTaken, testCalculateOutput.pathTaken, "Result is not correct")
+        XCTAssertEqual(testResult, testCalculateOutput.result, "Result is not correct")
+        
+    }
+
+       /**
      This Test case checks when test inputs (all positive) are given whether the DFS function returns the correct length
      */
     func testPairLenght() {

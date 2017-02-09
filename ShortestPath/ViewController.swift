@@ -66,21 +66,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     /**
-     This IBAction checks the path length.
-     If the path length is less or equal to 50 then it shows the user the path length and the path itself.
-     If the path length is more than 50 then it shows a message to that effect.
+     This IBAction returns the result.
      */
     @IBAction func resultButton() {
         resultTitleLbl.text = "Output"
-        let pathLength = calculatePathLength(arr: arr)
-        if ( pathLength <= 50) {
-            resultLabel.text = "Shortest Path length is \(calculatePathLength(arr: arr))\n \n Path is \(calculatePath(p:path))"
-        } else {
-            resultLabel.text = "Shortest Path length is more than 50"
-        }
+        let (result, pathLength, pathTaken) = calculateOutput(cArr: arr)
+        resultLabel.text = "\(result)\nShortest Path length is \(pathLength) \n Path is \(pathTaken)"
         resultBtn.isHidden = true
         resetBtn.isHidden = false
     }
+    
+
     
     /**
      This IBAction only takes care of user input for number of rows and Number of columns.
@@ -99,7 +95,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             if nRow < 11 && nRow > 0 {
                 label1.textColor = UIColor.black
                 numberOfRows = nRow
-                label1.text = "Insert Number of Columns between 5-10"
+                label1.text = "Insert Number of Columns between 1-10"
                 textField1.text = ""
             }else {
                 // If the input is outside range show red text
@@ -112,7 +108,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 return
             }
             // checks whether the number of columns input is between 5-10
-            if nColumn <= 10 && nColumn >= 5 {
+            if nColumn <= 10 && nColumn >= 1 {
                 label2.text = "Please Insert \(nColumn) numbers perated by space for row 1"
                 label1.textColor = UIColor.black
                 numberOfColumn = nColumn
@@ -136,6 +132,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
      to perform the calculation again without relaunching the app.
      */
     @IBAction func resetBtnTapped(_ sender: AnyObject) {
+        check = false
         numberOfRows = 0
         numberOfColumn = 0
         arr = [[Int]]()
@@ -143,7 +140,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         resultLabel.text = ""
         resultTitleLbl.text = ""
         errorLbl.text = ""
-        label2.text = "Please Insert numbers perated by space for row 1"
+        label2.text = "Please Insert numbers seperated by space for row 1"
         label1.text = "Insert Number of Rows between 1-10"
         textField1.text = ""
         textField1.isUserInteractionEnabled = true
