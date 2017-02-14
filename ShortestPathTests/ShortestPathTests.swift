@@ -76,6 +76,19 @@ class ShortestPathTests: XCTestCase {
         XCTAssertEqual(testResult, testCalculateOutput.result, "Result is not correct")
 
     }
+    
+    func testCalculateOutputNormalFLow2 () {
+        let testArr = [[3,4,1,2,8,6],[6,1,8,2,7,4],[5,9,3,9,9,5],[8,4,1,3,2,6],[3,7,2,1,2,3]]
+        let testPathLength = 11
+        let testPathTaken = "1 2 1 5 4 5"
+        let testResult = "Yes"
+        let testCalculateOutput =  vc.calculateOutput(cArr: testArr)
+        XCTAssertEqual(testPathLength, testCalculateOutput.pathLength, "Result is not correct")
+        XCTAssertEqual(testPathTaken, testCalculateOutput.pathTaken, "Result is not correct")
+        XCTAssertEqual(testResult, testCalculateOutput.result, "Result is not correct")
+        
+    }
+
     /**
      This Test case checks when test inputs (5X3 matrix with no path <50) is given whether the calculateOutput() function returns the correct PathLength, PathTaken and TestResult as expected
      */

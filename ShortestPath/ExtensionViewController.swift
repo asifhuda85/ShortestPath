@@ -188,10 +188,10 @@ extension ViewController{
         //For the penultimate column, lowest value from the last column is included.
         if(j>=cols-2) {
             var min = 0
-            if(a[i1][j+1]<a[i2][j+1] && a[i1][j+1]<a[i3][j+1]) {
+            if(a[i1][j+1]<=a[i2][j+1] && a[i1][j+1]<=a[i3][j+1]) {
                 min = i1
             }
-            else if(a[i2][j+1]<a[i1][j+1] && a[i2][j+1]<a[i3][j+1]) {
+            else if(a[i2][j+1]<=a[i1][j+1] && a[i2][j+1]<=a[i3][j+1]) {
                 min = i2
             }
             else {
@@ -207,11 +207,11 @@ extension ViewController{
             var p1:Pair = dfs(a: a, p: Pair(len: p.len + a[i1][j+1], s: s ), i: i1, j: j+1, rows: rows, cols: cols)
             var p2:Pair = dfs(a: a, p: Pair(len: p.len + a[i2][j+1], s: s ), i: i2, j: j+1, rows: rows, cols: cols)
             var p3:Pair = dfs(a: a, p: Pair(len: p.len + a[i3][j+1], s: s ), i: i3, j: j+1, rows: rows, cols: cols)
-            if(p1.len<p2.len && p1.len<p3.len) {
+            if(p1.len<=p2.len && p1.len<=p3.len) {
                 p1.path.append(" \(i1+1)")
                 return p1
             }
-            else if(p2.len<p1.len && p2.len<p3.len) {
+            else if(p2.len<=p1.len && p2.len<=p3.len) {
                 p2.path.append(" \(i2+1)")
                 return p2
             }
